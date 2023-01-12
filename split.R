@@ -1,12 +1,12 @@
-# list files in data directory
-list.files('../data/bio_enviromental/bio_para entrega/Terceira/Normal_Observado')
+# List files in data directory (on cloud)
+data_dir <- 'P:/Universidade dos Açores/data'
+list.files(data_dir)
 
-# set path to bio1 of Terceira
-ter_bio <- '../data/bio_enviromental/bio_para entrega/Terceira/Normal_Observado/bio1.tif'
+# Set path to bio1 of Terceira
+ter_bio1 <- file.path(data_dir, 'bio_enviromental/bio_para entrega/Terceira/Normal_Observado/bio1.tif')
 
 # Load packages
 library(raster)
-library(dplyr)
 
 # Attempt to clear all plots (suppress error if not plots exist)
 try(dev.off(dev.list()["RStudioGD"]), silent=TRUE)
