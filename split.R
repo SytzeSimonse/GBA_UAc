@@ -5,6 +5,14 @@ list.files(data_dir)
 # Set path to bio1 of Terceira
 ter_bio1 <- file.path(data_dir, 'bio_enviromental/bio_para entrega/Terceira/Normal_Observado/bio1.tif')
 
+# Set paths to trap data
+## LOCATIONS
+trap_site_locations_fpath <- file.path(data_dir, 'species/site_locations.csv')
+trap_site_locations <- read.csv(trap_site_locations_fpath, sep = ';')
+## DIVERSITY DATA
+trap_site_diversities_fpath <- file.path(data_dir, 'species/site_locations.csv')
+trap_site_diversities <- read.csv(trap_site_diversities_fpath, sep = ';')
+
 # Load packages
 library(raster)
 
@@ -12,7 +20,7 @@ library(raster)
 try(dev.off(dev.list()["RStudioGD"]), silent=TRUE)
 
 # Read in raster file
-r <- raster(ter_bio)
+r <- raster(ter_bio1)
 
 print(paste("Height (in kilometres):", nrow(r) * xres(r) / 1000))
 print(paste("Width (in kilometres):", ncol(r) * yres(r) / 1000))
@@ -23,9 +31,6 @@ spatial_dimension <- 10000
 # Calculate number of rows and columns of tiles
 nrow_tiles <- ceiling((nrow(r) * xres(r)) / spatial_dimension)
 ncol_tiles <- ceiling((ncol(r) * yres(r)) / spatial_dimension)
-
-print(nrow_tiles)
-print(ncol_tiles)
 
 # Calculate tile size
 tile_size <- spatial_dimension * xres(r)
