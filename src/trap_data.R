@@ -12,3 +12,6 @@ trap_site_diversities <- read.csv(trap_site_diversities_fpath, sep = ',')
 
 # Combine trap data
 trap_data <- merge(trap_site_locations, trap_site_diversities, by.x = "Site_code", by.y = "site")
+
+# Subset data from Terceira
+trap_data_ter <- subset(trap_data, grepl("^TER-", trap_data$Site_code))
