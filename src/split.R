@@ -13,9 +13,6 @@ trap_site_locations <- read.csv(trap_site_locations_fpath, sep = ';')
 trap_site_diversities_fpath <- file.path(data_dir, 'species/site_locations.csv')
 trap_site_diversities <- read.csv(trap_site_diversities_fpath, sep = ';')
 
-# Load packages
-library(raster)
-
 # Attempt to clear all plots (suppress error if not plots exist)
 try(dev.off(dev.list()["RStudioGD"]), silent=TRUE)
 
