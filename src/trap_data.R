@@ -15,3 +15,16 @@ trap_data <- merge(trap_site_locations, trap_site_diversities, by.x = "Site_code
 
 # Subset data from Terceira
 trap_data_ter <- subset(trap_data, grepl("^TER-", trap_data$Site_code))
+
+# Create SpatialPointsDataFrame from DataFrame
+## Prepare coordinates, data, and proj4string
+coords <- trap_data_ter[ , c("X_coord", "Y_coord")]   # coordinates
+data   <- trap_data_ter[ , 4:ncol(trap_data_ter)]          # data
+crs    <- CRS("+init=epsg:32626") # proj4string of coords
+
+## Make the SpatialPointsDataFrame object
+spdf <- SpatialPointsDataFrame(coords      = coords,
+                               data        = data, 
+                               proj4string = crs)
+
+#spplot(spdf, "all_median")
