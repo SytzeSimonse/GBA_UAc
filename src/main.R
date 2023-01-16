@@ -31,3 +31,7 @@ result_list <- lapply(1:nrow(tile_df), function(i) {
   # Check if the points are within the RasterLayer extent
   extracted_values <- extract(tile, spdf)
 })
+
+# Plot raster and overlay points
+plot(r)
+plot(data_sp_reprojected, add = TRUE)
