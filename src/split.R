@@ -19,9 +19,6 @@ try(dev.off(dev.list()["RStudioGD"]), silent=TRUE)
 # Read in raster file
 r <- raster(ter_bio1)
 
-print(paste("Height (in kilometres):", nrow(r) * xres(r) / 1000))
-print(paste("Width (in kilometres):", ncol(r) * yres(r) / 1000))
-
 # Set tile size to 1000 meters x 1000 meters
 spatial_dimension <- 10000
 
@@ -85,7 +82,7 @@ for (i in 0:(ncol_tiles - 1)) {
     tile_median <- cellStats(tile, median)
     
     # Display tile
-    plot(tile, main = paste("Tile:", counter)) 
+    # plot(tile, main = paste("Tile:", counter)) 
     
     # Append tile to Data Frame
     tile_row <- as.list(c(counter, ext[1:4], tile_mean, tile_min, tile_max, tile_median))

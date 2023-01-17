@@ -16,9 +16,6 @@ ggplot(trap_data_ter, aes(x = X_coord, y = Y_coord)) +
 
 # Loop through tiles in DataFrame
 result_list <- lapply(1:nrow(tile_df), function(i) {
-  # Show iteration
-  print(i)
-  
   # Select row
   row <- tile_df[i,]
   
@@ -27,7 +24,6 @@ result_list <- lapply(1:nrow(tile_df), function(i) {
   
   # Create tile by cropping with extent
   tile <- crop(r, tile_ext)
-  plot(tile)
   
   # Check if the points are within the RasterLayer extent
   extracted_values <- extract(tile, spdf)
