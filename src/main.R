@@ -1,6 +1,7 @@
 # Load libraries
 library(sp)
 library(raster)
+library(sf)
 
 # Create trap data
 source("src/trap_data.R")
@@ -34,4 +35,5 @@ result_list <- lapply(1:nrow(tile_df), function(i) {
 
 # Plot raster and overlay points
 plot(r)
-plot(data_sp_reprojected, add = TRUE)
+plot(data_sp_reprojected, add = TRUE, col = "purple", pch = 16, cex = 0.8)
+
