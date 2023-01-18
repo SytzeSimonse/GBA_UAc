@@ -23,13 +23,13 @@ data   <- trap_data_ter[ , 4:ncol(trap_data_ter)]          # data
 crs    <- CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0") # proj4string of coords
 
 ## Make the SpatialPointsDataFrame object
-spdf <- SpatialPointsDataFrame(coords      = coords,
+trap_data_ter_spdf <- SpatialPointsDataFrame(coords      = coords,
                                data        = data, 
                                proj4string = crs)
 
 # Convert CRS of SPDF to local projection (EPSG:32626)
 ## Reproject the coordinates
-spdf_reprojected <- spTransform(spdf, CRS("+init=epsg:32626"))
+trap_data_ter_spdf <- spTransform(trap_data_ter_spdf, CRS("+init=epsg:32626"))
 
 # Check the CRS of the reprojected data
-st_crs(spdf_reprojected)
+st_crs(trap_data_ter_spdf)
