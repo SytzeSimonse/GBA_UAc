@@ -2,6 +2,7 @@
 library(sp)
 library(raster)
 library(sf)
+library(rgeos)
 
 # Create trap data
 source("src/trap_data.R")
@@ -9,10 +10,14 @@ source("src/trap_data.R")
 # Split raster data
 source("src/split.R")
 
-# Plot points
-library(ggplot2)
-ggplot(trap_data_ter, aes(x = X_coord, y = Y_coord)) + 
-  geom_point()
+# Add empty (NA) columns for trap data to DataFrame
+## Create column names: 29 diversity indices * X no. of statistics
+diversity_indices <- colnames(trap_data_ter_spdf@data)
+statistics <- c("mean", "min", "max")
+diversity_ind_stats <- outer(diversity_indices, statistics, sep = "_", paste)
+
+## Add columns with empty values
+tile_df[, diversity_ind_stats] <- NA
 
 # Loop through tiles in DataFrame
 result_list <- lapply(1:nrow(tile_df), function(i) {
@@ -26,10 +31,18 @@ result_list <- lapply(1:nrow(tile_df), function(i) {
   tile <- crop(r, tile_ext)
   
   # Check if the points are within the RasterLayer extent
-  extracted_values <- extract(tile, spdf)
+  ## Convert SPDF to SpatialPoints
+  trap_data_ter_sp <- SpatialPoints(trap_data_ter_spdf)
+  
+  ## Extract points
+  extracted_points <- intersect(trap_data_ter_sp, tile)
+  if (!(length(extracted_points)) == 0) {
+    print(extracted_points)
+    print(as.data.frame(extracted_points))
+  }
 })
 
 # Plot raster and overlay points
 plot(r)
-plot(data_sp_reprojected, add = TRUE, col = "purple", pch = 16, cex = 0.8)
+plot(trap_data_ter_sp, add = TRUE, col = "purple", pch = 16, cex = 0.8)
 
