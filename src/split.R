@@ -48,7 +48,7 @@ for (i in 0:(ncol_tiles - 1)) {
   for (j in 0:(nrow_tiles - 1)) {
     # Increment counter
     counter <- counter + 1
-    print(paste("Iteration no.:", counter))
+    # print(paste("Iteration no.:", counter))
     
     # Calculate min. x coordinates
     xmin <- extent(r)[1] + (spatial_dimension * i)
