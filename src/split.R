@@ -20,7 +20,7 @@ try(dev.off(dev.list()["RStudioGD"]), silent=TRUE)
 r <- raster(ter_bio1)
 
 # Set tile size to 1000 meters x 1000 meters
-spatial_dimension <- 10000
+spatial_dimension <- 5000
 
 # Calculate number of rows and columns of tiles
 nrow_tiles <- ceiling((nrow(r) * xres(r)) / spatial_dimension)
@@ -33,7 +33,7 @@ tile_size <- spatial_dimension * xres(r)
 tile_rasters <- vector("list", nrow_tiles * ncol_tiles)
 
 # Result values
-tile_df_colnames <- c("tile_no", "xmin", "xmax", "ymin", "ymax", "mean", "min", "max", "median")
+tile_df_colnames <- c("tile_no", "xmin", "xmax", "ymin", "ymax", "raster_mean", "raster_min", "raster_max", "raster_median")
 tile_df <- data.frame(matrix(nrow = 0, ncol = length(tile_df_colnames)))
 colnames(tile_df) <- tile_df_colnames
 
