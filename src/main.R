@@ -4,6 +4,9 @@ library(raster)
 library(sf)
 library(rgeos)
 
+# Load data
+source('src/global_data.R')
+
 # Create trap data
 source("src/trap_data.R")
 
