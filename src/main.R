@@ -19,6 +19,9 @@ diversity_ind_stats <- outer(diversity_indices, statistics, sep = "_", paste)
 ## Add columns with empty values
 tile_df[, diversity_ind_stats] <- NA
 
+# Tally number of traps (to verify if all traps are within a tile)
+total_num_of_traps <- 0
+
 # Loop through tiles in DataFrame
 result_list <- lapply(1:nrow(tile_df), function(i) {
   # Select row
@@ -36,6 +39,14 @@ result_list <- lapply(1:nrow(tile_df), function(i) {
   
   ## Extract points
   extracted_points <- intersect(trap_data_ter_sp, tile)
+  
+  ## Count number of traps within tile extent
+  num_of_traps <- length(extracted_points)
+  
+  ## Add number of traps within tile to total number (for later verification)
+  total_num_of_traps <<- total_num_of_traps + num_of_traps
+  
+  ## Set CRS of extracted points to local projection
   crs(extracted_points) <- CRS("+init=epsg:32626")
   
   ## Check if there is more than 0 points within raster
@@ -43,16 +54,26 @@ result_list <- lapply(1:nrow(tile_df), function(i) {
     ## Select data by points
     result <- over(extracted_points, trap_data_ter_spdf)
     
-    # Calculate mean for each column
-    return(round(colMeans(result), 1))
+    return(c(
+      num_of_traps, 
+      ## Calculate mean for each column
+      round(colMeans(result), 1))
+      )
   }
 })
+
+# Check if all traps are 'found' within tiles
+if (nrow(trap_data_ter) == total_num_of_traps) {
+  print("All traps in the DataFrame are within the tiles.")
+} else {
+  stop("Error: Not all traps in the DataFrame are identified in a tile.")
+}
 
 # Add results of aggregating points to the tile DataFrame
 for (i in 1:nrow(tile_df)) {
   # Check if no values were found
   if (!(is.null(result_list[[i]]))) {
-    tile_df[i,10:38] <- result_list[i][[1]]
+    tile_df[i,10:ncol(tile_df)] <- result_list[i][[1]]
   }
 }
 

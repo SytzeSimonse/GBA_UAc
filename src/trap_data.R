@@ -7,7 +7,7 @@ list.files(data_dir)
 trap_site_locations_fpath <- file.path(data_dir, 'species/site_locations.csv')
 trap_site_locations <- read.csv(trap_site_locations_fpath, sep = ';')
 ## DIVERSITY DATA
-trap_site_diversities_fpath <- file.path(data_dir, 'species/site_diversities.csv')
+trap_site_diversities_fpath <- file.path(data_dir, 'species/site_diversities.csv') 
 trap_site_diversities <- read.csv(trap_site_diversities_fpath, sep = ',')
 
 # Combine trap data

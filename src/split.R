@@ -33,7 +33,7 @@ tile_size <- spatial_dimension * xres(r)
 tile_rasters <- vector("list", nrow_tiles * ncol_tiles)
 
 # Result values
-tile_df_colnames <- c("tile_no", "xmin", "xmax", "ymin", "ymax", "raster_mean", "raster_min", "raster_max", "raster_median")
+tile_df_colnames <- c("tile_no", "xmin", "xmax", "ymin", "ymax", "raster_mean", "raster_min", "raster_max", "raster_median", "number_of_traps")
 tile_df <- data.frame(matrix(nrow = 0, ncol = length(tile_df_colnames)))
 colnames(tile_df) <- tile_df_colnames
 
