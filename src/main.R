@@ -6,6 +6,7 @@ library(rgeos)
 
 # Load data
 source('src/global_data.R')
+source('src/load_data.R')
 
 # Create trap data
 source("src/trap_data.R")

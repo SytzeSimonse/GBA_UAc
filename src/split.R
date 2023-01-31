@@ -1,20 +1,8 @@
-# List files in data directory (on cloud)
-data_dir <- 'P:/Universidade dos Açores/data'
-list.files(data_dir)
-
-# Set path to bio1 of Terceira
-ter_bio1 <- file.path(data_dir, 'bio_enviromental/bio_para entrega/Terceira/Normal_Observado/bio1.tif')
-
-# Set paths to trap data
-## LOCATIONS
-trap_site_locations_fpath <- file.path(data_dir, 'species/site_locations.csv')
-trap_site_locations <- read.csv(trap_site_locations_fpath, sep = ';')
-## DIVERSITY DATA
-trap_site_diversities_fpath <- file.path(data_dir, 'species/site_locations.csv')
-trap_site_diversities <- read.csv(trap_site_diversities_fpath, sep = ';')
-
 # Attempt to clear all plots (suppress error if not plots exist)
 try(dev.off(dev.list()["RStudioGD"]), silent=TRUE)
+
+# Create RasterStack of all environmental rasters
+rs <- stack(raster_fpaths)
 
 # Read in raster file
 r <- raster(ter_bio1)
@@ -31,6 +19,9 @@ tile_size <- spatial_dimension * xres(r)
 
 # Initialize list to store tile rasters
 tile_rasters <- vector("list", nrow_tiles * ncol_tiles)
+
+# Create vector of raster statistics to perform
+raster_stat_types <- c("mean", "min", "max", "median")
 
 # Result values
 tile_df_colnames <- c("tile_no", "xmin", "xmax", "ymin", "ymax", "raster_mean", "raster_min", "raster_max", "raster_median", "number_of_traps")
